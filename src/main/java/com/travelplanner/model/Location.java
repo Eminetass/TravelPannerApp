@@ -1,16 +1,26 @@
-package com.travelplanner.dto;
+package com.travelplanner.model;
 
-public class LocationDTO {
+import jakarta.persistence.*;
+
+@Entity
+public class Location {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String type;
     private String city;
     private String address;
     private double latitude;
     private double longitude;
-    private Long planId;
 
-    // Getter-Setter'lar
+    @ManyToOne
+    @JoinColumn(name = "plan_id")
+    private Plan plan;
+
+    // --- GETTER / SETTER ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -32,6 +42,6 @@ public class LocationDTO {
     public double getLongitude() { return longitude; }
     public void setLongitude(double longitude) { this.longitude = longitude; }
 
-    public Long getPlanId() { return planId; }
-    public void setPlanId(Long planId) { this.planId = planId; }
+    public Plan getPlan() { return plan; }
+    public void setPlan(Plan plan) { this.plan = plan; }
 }

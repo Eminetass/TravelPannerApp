@@ -1,4 +1,7 @@
 package com.travelplanner.repository;
 
-public class LocationRepository {
+import com.travelplanner.model.Location;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LocationRepository extends JpaRepository<Location, Long> {
 }
