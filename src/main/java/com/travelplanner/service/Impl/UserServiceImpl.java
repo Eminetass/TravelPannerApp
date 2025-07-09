@@ -1,4 +1,4 @@
-package com.travelplanner.service.Impl;
+package com.travelplanner.service.impl;
 
 import com.travelplanner.model.User;
 import com.travelplanner.repository.UserRepository;
@@ -29,5 +29,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'existsByUsername'");
     }
 }

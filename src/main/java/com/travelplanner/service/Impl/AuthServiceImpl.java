@@ -1,4 +1,5 @@
-package com.travelplanner.service.Impl;
+package com.travelplanner.service.impl;
 
 public class AuthServiceImpl {
+    
 }

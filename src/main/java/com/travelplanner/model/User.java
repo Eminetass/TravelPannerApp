@@ -22,4 +22,8 @@ public class User {
 
     @Column(nullable = false)
     private String role; // örn: ROLE_USER, ROLE_ADMIN
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
 }

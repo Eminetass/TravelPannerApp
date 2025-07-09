@@ -1,17 +1,12 @@
 package com.travelplanner.service;
 
-import com.travelplanner.dto.PlanDTO;
+import com.travelplanner.model.Plan;
+
 import java.util.List;
 
 public interface PlanService {
-    default PlanDTO createPlan() {
-        return createPlan(null);
-    }
-
-    PlanDTO createPlan(PlanDTO planDTO);
-    List<PlanDTO> getAllPlans();
-    PlanDTO getPlanById(Long id);
-    PlanDTO updatePlan(Long id, PlanDTO planDTO);
-    void deletePlan(Long id);
+    Plan createPlan(Plan plan, Long userId);
+    List<Plan> getPlansByUserId(Long userId);
+    Plan updatePlan(Long id, Plan updatedPlan, Long userId);
+    void deletePlan(Long id, Long userId);
 }
-

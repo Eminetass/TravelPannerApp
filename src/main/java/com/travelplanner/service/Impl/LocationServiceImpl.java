@@ -1,5 +1,5 @@
 // Bu dosya: com.travelplanner.service.impl.LocationServiceImpl.java
-package com.travelplanner.service.Impl;
+package com.travelplanner.service.impl;
 
 import com.travelplanner.dto.LocationDTO;
 import com.travelplanner.model.Location;

@@ -1,8 +1,11 @@
 package com.travelplanner.controller;
 
-import com.travelplanner.dto.PlanDTO;
+import com.travelplanner.model.Plan;
 import com.travelplanner.service.PlanService;
+import com.travelplanner.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,28 +17,31 @@ public class PlanController {
     @Autowired
     private PlanService planService;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @PostMapping
-    public PlanDTO createPlan(@RequestBody PlanDTO planDTO) {
-        return planService.createPlan(planDTO);
+    public ResponseEntity<Plan> createPlan(@RequestBody Plan plan, HttpServletRequest request) {
+        Long userId = jwtUtil.extractUserIdFromRequest(request);
+        return ResponseEntity.ok(planService.createPlan(plan, userId));
     }
 
     @GetMapping
-    public List<PlanDTO> getAllPlans() {
-        return planService.getAllPlans();
-    }
-
-    @GetMapping("/{id}")
-    public PlanDTO getPlanById(@PathVariable Long id) {
-        return planService.getPlanById(id);
+    public ResponseEntity<List<Plan>> getPlans(HttpServletRequest request) {
+        Long userId = jwtUtil.extractUserIdFromRequest(request);
+        return ResponseEntity.ok(planService.getPlansByUserId(userId));
     }
 
     @PutMapping("/{id}")
-    public PlanDTO updatePlan(@PathVariable Long id, @RequestBody PlanDTO planDTO) {
-        return planService.updatePlan(id, planDTO);
+    public ResponseEntity<Plan> updatePlan(@PathVariable Long id, @RequestBody Plan plan, HttpServletRequest request) {
+        Long userId = jwtUtil.extractUserIdFromRequest(request);
+        return ResponseEntity.ok(planService.updatePlan(id, plan, userId));
     }
 
     @DeleteMapping("/{id}")
-    public void deletePlan(@PathVariable Long id) {
-        planService.deletePlan(id);
+    public ResponseEntity<Void> deletePlan(@PathVariable Long id, HttpServletRequest request) {
+        Long userId = jwtUtil.extractUserIdFromRequest(request);
+        planService.deletePlan(id, userId);
+        return ResponseEntity.noContent().build();
     }
 }
