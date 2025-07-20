@@ -8,7 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PlacesService {
@@ -18,8 +20,8 @@ public class PlacesService {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public List<String> getPlaces(String city, String type) {
-        List<String> results = new ArrayList<>();
+    public List<Map<String, String>> getPlaces(String city, String type)    {
+        List<Map<String, String>> results = new ArrayList<>();
 
         String url = UriComponentsBuilder.fromHttpUrl("https://maps.googleapis.com/maps/api/place/textsearch/json")
                 .queryParam("query", type + " in " + city)
@@ -33,9 +35,13 @@ public class PlacesService {
 
         for (int i = 0; i < Math.min(places.length(), 10); i++) {
             JSONObject place = places.getJSONObject(i);
-            results.add(place.getString("name"));
+            Map<String, String> placeInfo = new HashMap<>();
+            placeInfo.put("name", place.getString("name"));
+            placeInfo.put("address", place.optString("formatted_address", "N/A"));
+            placeInfo.put("lat", String.valueOf(place.getJSONObject("geometry").getJSONObject("location").getDouble("lat")));
+            placeInfo.put("lng", String.valueOf(place.getJSONObject("geometry").getJSONObject("location").getDouble("lng")));
+            results.add(placeInfo);
         }
-
         return results;
     }
 }

@@ -33,6 +33,11 @@ public class PlanServiceImpl implements PlanService {
     }
 
     @Override
+     public Plan savePlan(Plan plan) {
+        return planRepository.save(plan);
+    }
+
+    @Override
     public Plan updatePlan(Long id, Plan updatedPlan, Long userId) {
         Plan existingPlan = planRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Plan not found"));
